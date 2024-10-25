@@ -1,0 +1,233 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Reto Técnico Backend Node.js",
+    "description": "Desarrollo de prueba técnica para puesto de backend Dev.",
+    "contact": {
+      "email": "joseluis.rome@protonmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://virtserver.swaggerhub.com/JoseRoncal/NODEJS_BACKEND/1.0.0",
+      "description": "SwaggerHub API Auto Mocking"
+    },
+    {
+      "url": "https://57o9stink7.execute-api.us-east-1.amazonaws.com",
+      "description": "RETO TÉCNICO BACKEND NODEJS"
+    }
+  ],
+  "tags": [
+    {
+      "name": "DB",
+      "description": "Métodos de inserción y consulta de Dynamo DB"
+    },
+    {
+      "name": "Integration",
+      "description": "Métodos asociados a integración con SWAPI"
+    }
+  ],
+  "paths": {
+    "/db/products/{id}": {
+      "get": {
+        "tags": ["DB"],
+        "summary": "Obtener producto por ID",
+        "description": "Utilizar UUID del producto para obtener desde base de datos Dynamo DB",
+        "operationId": "getProductById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificador único del producto",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Registro encontrado satisfactoriamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Producto no encontrado"
+          }
+        }
+      }
+    },
+    "/db/products": {
+      "post": {
+        "tags": ["DB"],
+        "summary": "Agregar producto a Dynamo DB",
+        "description": "Agregar product a Dynamo DB.",
+        "operationId": "addProduct",
+        "requestBody": {
+          "description": "Datos a insertar",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProduct"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Producto agregado"
+          },
+          "400": {
+            "description": "invalid input, object invalid"
+          }
+        }
+      }
+    },
+    "/integration/star-wars/planets": {
+      "get": {
+        "tags": ["Integration"],
+        "summary": "Obtener planetas desde API SWAPI",
+        "description": "Método para obtener planetas desde SWAPI, los campos son traducidos al español internamente.",
+        "operationId": "getPlanets",
+        "responses": {
+          "200": {
+            "description": "Registro de planetas econtrado satisfactoriamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Planet"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno en el sistema"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Product": {
+        "required": ["id", "name", "value"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
+          },
+          "name": {
+            "type": "string",
+            "example": "Product Example"
+          },
+          "value": {
+            "type": "number",
+            "example": 99
+          }
+        }
+      },
+      "CreateProduct": {
+        "required": ["name", "value"],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Product Example"
+          },
+          "value": {
+            "type": "number",
+            "example": 99
+          }
+        }
+      },
+      "Planet": {
+        "required": [
+          "clima",
+          "creado",
+          "diametro",
+          "editado",
+          "gravedad",
+          "nombre",
+          "peliculas",
+          "periodo_orbital",
+          "periodo_rotacion",
+          "poblacion",
+          "residentes",
+          "superficie_agua",
+          "terreno"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "example": "Test"
+          },
+          "diametro": {
+            "type": "string",
+            "example": "1000"
+          },
+          "periodo_rotacion": {
+            "type": "string",
+            "example": "1"
+          },
+          "periodo_orbital": {
+            "type": "string",
+            "example": "100"
+          },
+          "gravedad": {
+            "type": "string",
+            "example": "standard"
+          },
+          "poblacion": {
+            "type": "string",
+            "example": "1000"
+          },
+          "clima": {
+            "type": "string",
+            "example": "clime"
+          },
+          "terreno": {
+            "type": "string",
+            "example": "terrein"
+          },
+          "superficie_agua": {
+            "type": "string",
+            "example": "1"
+          },
+          "residentes": {
+            "type": "string",
+            "example": "[\"https://swapi.dev/api/test\",\"https://swapi.dev/api/test\"]"
+          },
+          "peliculas": {
+            "type": "string",
+            "example": "[\"https://swapi.dev/api/test\",\"https://swapi.dev/api/test\"]"
+          },
+          "creado": {
+            "type": "string",
+            "example": "2014-12-09T13:50:49.641000Z"
+          },
+          "editado": {
+            "type": "string",
+            "example": "2014-12-20T20:58:18.411000Z"
+          }
+        }
+      }
+    }
+  }
+}

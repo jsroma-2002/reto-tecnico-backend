@@ -1,0 +1,51 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: jroncal
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: first-app
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: test-http-api
+
+frameworkVersion: "4"
+
+stages:
+  default:
+    params:
+      tableName: "products-table-${sls:stage}"
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+          Resource:
+            - Fn::GetAtt: [ProductsTable, Arn]
+  environment:
+    PRODUCTS_TABLE: ${param:tableName}
+
+functions:
+  handler:
+    handler: handler.handler
+    events:
+      - httpApi: "*"
+
+resources:
+  Resources:
+    ProductsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${param:tableName}
