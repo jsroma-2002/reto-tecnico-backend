@@ -7,7 +7,7 @@ export class ProductsController {
       const { name, value } = req.body;
       const product = await ProductModel.create(name, value);
       res.status(201).json(product);
-    } catch (error) {
+    } catch {
       res.status(500).json({ message: "Internal Server Error" });
     }
   }
@@ -17,7 +17,7 @@ export class ProductsController {
       const { id } = req.params;
       const product = await ProductModel.getByID(id);
       res.status(200).json(product);
-    } catch (error) {
+    } catch {
       res.status(404).json({ message: "Product not found" });
     }
   }

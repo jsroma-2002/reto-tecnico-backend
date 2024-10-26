@@ -31,18 +31,14 @@ export class ProductModel {
       },
     };
 
-    try {
-      const command = new PutCommand(params);
-      const response = await db.send(command);
-      if (response) {
-        return {
-          id,
-          name,
-          value,
-        };
-      }
-    } catch (error) {
-      throw error;
+    const command = new PutCommand(params);
+    const response = await db.send(command);
+    if (response) {
+      return {
+        id,
+        name,
+        value,
+      };
     }
   }
 
@@ -61,23 +57,19 @@ export class ProductModel {
       },
     };
 
-    try {
-      const command = new GetCommand(params);
-      const { Item } = await db.send(command);
+    const command = new GetCommand(params);
+    const { Item } = await db.send(command);
 
-      if (Item) {
-        const { id, name, value } = Item;
+    if (Item) {
+      const { id, name, value } = Item;
 
-        return {
-          id,
-          name,
-          value,
-        };
-      } else {
-        throw new Error("Product not found");
-      }
-    } catch (error) {
-      throw error;
+      return {
+        id,
+        name,
+        value,
+      };
+    } else {
+      throw new Error("Product not found");
     }
   }
 }

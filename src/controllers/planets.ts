@@ -12,7 +12,7 @@ export class PlanetsController {
       );
 
       res.status(200).json(planets);
-    } catch (error) {
+    } catch {
       res.status(500).json({ message: "Internal Server Error" });
     }
   }
