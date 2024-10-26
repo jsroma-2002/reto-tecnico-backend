@@ -1,5 +1,8 @@
+import { Planet } from "../types/planet";
+import { SwapiPlanet } from "./swapi-planets-adapter";
+
 export class PlanetAdapter {
-  static translate(planet) {
+  static translate(planet: SwapiPlanet): Planet {
     return {
       nombre: planet.name,
       diametro: planet.diameter,

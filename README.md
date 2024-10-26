@@ -18,24 +18,22 @@ Este API proporciona endpoints para interactuar con productos almacenados en Dyn
 
 **Cuerpo de la solicitud:**
 
-``` json
+```json
 {
   "name": "Nombre del Producto",
   "value": 100
 }
-
- ```
+```
 
 **Respuesta exitosa:**
 
-``` json
+```json
 {
   "id": "id-del-producto",
   "name": "Nombre del Producto",
   "value": 100
 }
-
- ```
+```
 
 #### **Obtener Producto por ID**
 
@@ -51,23 +49,21 @@ Este API proporciona endpoints para interactuar con productos almacenados en Dyn
 
 **Respuesta exitosa:**
 
-``` json
+```json
 {
   "id": "id-del-producto",
   "name": "Nombre del Producto",
   "value": 100
 }
-
- ```
+```
 
 **Respuesta producto No encontrado:**
 
-``` json
+```json
 {
   "message": "Product not found"
 }
-
- ```
+```
 
 ### Planetas
 
@@ -81,7 +77,7 @@ Este API proporciona endpoints para interactuar con productos almacenados en Dyn
 
 **Respuesta exitosa:**
 
-``` json
+```json
 [
   {
     "name": "Tatooine",
@@ -96,16 +92,15 @@ Este API proporciona endpoints para interactuar con productos almacenados en Dyn
     "population": "2000000000"
   }
 ]
-
- ```
+```
 
 ## Entorno y despliegue
 
 ### Variables de entorno
 
-Para configurar las variables de entorno se debe agregar un archivo ``.env`` siguiendo el esquema del archivo ``.env.example``
+Para configurar las variables de entorno se debe agregar un archivo `.env` siguiendo el esquema del archivo `.env.example`
 
-``` env
+```env
 ORG=your-orgnization
 app=name-of-your-app-in-serverless-platform
 ```
@@ -116,19 +111,19 @@ app=name-of-your-app-in-serverless-platform
 
 Para desplegar el API, ejecuta el siguiente comando :
 
-``` shell
+```shell
 serverless deploy
- ```
+```
 
 Después de desplegar, deberías ver una salida similar a:
 
-``` shell
+```shell
 Deploying "serverless-http-api" to stage "dev" (us-east-1)
 ✔ Service deployed to stack serverless-http-api-dev (91s)
 endpoint: GET - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/
 functions:
   handler: serverless-http-api-dev-handler (1.6 kB)
- ```
+```
 
 ## Configuración
 
@@ -138,29 +133,29 @@ La configuración del servicio se encuentra en el archivo [serverless.yml]. Aqu�
 
 Las dependencias del proyecto están listadas en el archivo [package.json]. Asegúrate de instalar las dependencias necesarias antes de ejecutar o desplegar el proyecto:
 
-``` shell
+```shell
 npm install
- ```
+```
 
 ### Pruebas
 
-Las pruebas unitarias para el modelo de productos se encuentran en la carpeta  ``__tests__``. Puedes ejecutar las pruebas utilizando Mocha:
+Las pruebas unitarias para el modelo de productos se encuentran en la carpeta `__tests__`. Puedes ejecutar las pruebas utilizando Mocha:
 
-``` shell
+```shell
 npm test
 
- ```
+```
 
 ## Documentación
 
 ### Swagger
 
-Puedes encontrar la documentación asociada al proyecto en la carpeta ``docs``.
+Puedes encontrar la documentación asociada al proyecto en la carpeta `docs`.
 
 Adicionalmente se encuentra expuesta la documentación en SWAGGER/ OpenApi: <https://app.swaggerhub.com/apis-docs/JoseRoncal/NODEJS_BACKEND/1.0.0>
 
-**Importante**: La documentación en Swagger esta expuesta bajo un free trial, es posible que no se encuentre disponible al finalizar este periodo. Se recomienda utilizar el archivo ``open-api-doc.json`` incluido en la documentación para despliegues en local y revisión.
+**Importante**: La documentación en Swagger esta expuesta bajo un free trial, es posible que no se encuentre disponible al finalizar este periodo. Se recomienda utilizar el archivo `open-api-doc.json` incluido en la documentación para despliegues en local y revisión.
 
 ### Postman
 
-Puedes encontrar la documentación asociada al proyecto en la carpeta ``docs`` bajo el nombre ``api-usage-documentation.postman_collection``.
+Puedes encontrar la documentación asociada al proyecto en la carpeta `docs` bajo el nombre `api-usage-documentation.postman_collection`.
