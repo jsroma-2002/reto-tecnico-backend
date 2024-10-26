@@ -8,7 +8,7 @@ describe("ProductModel", () => {
 
   beforeEach(() => {
     docClientStub = sinon.createStubInstance(DynamoDBDocumentClient, {
-      send: sinon.stub(),
+      send: sinon.stub()
     });
   });
 
@@ -20,7 +20,7 @@ describe("ProductModel", () => {
   it("should create a product successfully and return the created product", async () => {
     const product = {
       name: "Product Red",
-      value: 100,
+      value: 100
     };
 
     const mockData = { Item: product };
@@ -29,12 +29,12 @@ describe("ProductModel", () => {
     docClientStub.send.resolves(mockData);
 
     const result = await ProductModel.create(product.name, product.value, {
-      docClient: docClientStub,
+      docClient: docClientStub
     });
 
     expect(result).to.deep.include({
       name: product.name,
-      value: product.value,
+      value: product.value
     });
     expect(result?.id).to.be.a("string");
   });
@@ -43,7 +43,7 @@ describe("ProductModel", () => {
     const product = {
       id: "1e88ea38-ffbd-49bc-b25d-a0eca4f7e1b8",
       name: "Product Red",
-      value: 100,
+      value: 100
     };
 
     const mockData = {
@@ -51,18 +51,18 @@ describe("ProductModel", () => {
         {
           id: product.id,
           name: product.name,
-          value: product.value,
-        },
-      ],
+          value: product.value
+        }
+      ]
     };
 
     // Set the stub to return the mock data
     docClientStub.send.resolves({
-      Item: mockData.Items.find((item) => item.id === product.id),
+      Item: mockData.Items.find((item) => item.id === product.id)
     });
 
     const result = await ProductModel.getByID(product.id, {
-      docClient: docClientStub,
+      docClient: docClientStub
     });
 
     expect(result).to.deep.equal(product);
@@ -76,7 +76,7 @@ describe("ProductModel", () => {
 
     try {
       await ProductModel.getByID(productId, {
-        docClient: docClientStub,
+        docClient: docClientStub
       });
       throw new Error("Expected error was not thrown");
     } catch (error) {

@@ -2,7 +2,7 @@ import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import {
   DynamoDBDocumentClient,
   GetCommand,
-  PutCommand,
+  PutCommand
 } from "@aws-sdk/lib-dynamodb";
 import { randomUUID } from "node:crypto";
 
@@ -27,8 +27,8 @@ export class ProductModel {
       Item: {
         id,
         name,
-        value,
-      },
+        value
+      }
     };
 
     const command = new PutCommand(params);
@@ -37,7 +37,7 @@ export class ProductModel {
       return {
         id,
         name,
-        value,
+        value
       };
     }
   }
@@ -53,8 +53,8 @@ export class ProductModel {
     const params = {
       TableName: PRODUCTS_TABLE,
       Key: {
-        id,
-      },
+        id
+      }
     };
 
     const command = new GetCommand(params);
@@ -66,7 +66,7 @@ export class ProductModel {
       return {
         id,
         name,
-        value,
+        value
       };
     } else {
       throw new Error("Product not found");

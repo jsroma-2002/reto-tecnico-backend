@@ -13,7 +13,7 @@ export class PlanetAdapter {
       residentes: planet.residents,
       peliculas: planet.films,
       creado: planet.created,
-      editado: planet.edited,
+      editado: planet.edited
     };
   }
 }
