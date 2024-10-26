@@ -110,6 +110,8 @@ ORG=your-orgnization
 app=name-of-your-app-in-serverless-platform
 ```
 
+**Importante**: este proyecto utiliza AWS IAM Role para la configuración de credenciales de AWS. Se recomienda tener esta configuración realizada para el despliegue y establecer la organización y aplicación en las variables de entorno. En caso se use otra configuración de credenciales sera necesario modificar la configuración de serverless framework.
+
 ### Despliegue
 
 Para desplegar el API, ejecuta el siguiente comando :
