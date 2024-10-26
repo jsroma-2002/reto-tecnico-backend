@@ -1,11 +1,25 @@
 {
   "name": "aws-node-express-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Serverless Framework API using Node.js, Express.js and MVC pattern.",
+  "private": true,
+  "author": {
+    "name": "José Roncal",
+    "email": "joseluis.rome@protonmail.com",
+    "url": "https://www.jroncal.lol"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jsroma-2002/reto-tecnico-backend"
+  },
   "scripts": {
     "test": "mocha ./__tests__/*",
     "lint": "npx eslint ./src",
     "format": "prettier --write ."
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
   },
   "dependencies": {
     "@aws-sdk/lib-dynamodb": "3.585.0",
