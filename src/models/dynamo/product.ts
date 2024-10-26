@@ -1,33 +1,34 @@
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import {
   DynamoDBDocumentClient,
   GetCommand,
   PutCommand
 } from "@aws-sdk/lib-dynamodb";
 import { randomUUID } from "node:crypto";
+import { Product, ProductCreate } from "../../types/product";
 
-const client = new DynamoDBClient();
-const docClient = DynamoDBDocumentClient.from(client);
 const PRODUCTS_TABLE = process.env.PRODUCTS_TABLE;
 
 export class ProductModel {
   static async create(
-    name: string,
-    value: number,
-    context?: {
+    product: ProductCreate,
+    context: {
       docClient: DynamoDBDocumentClient;
     }
-  ) {
-    const db = context?.docClient || docClient;
+  ): Promise<Product> {
+    const db = context.docClient;
 
     const id = randomUUID();
+
+    const created = new Date();
 
     const params = {
       TableName: PRODUCTS_TABLE,
       Item: {
         id,
-        name,
-        value
+        name: product.name,
+        value: product.value,
+        created,
+        updated: created
       }
     };
 
@@ -36,19 +37,23 @@ export class ProductModel {
     if (response) {
       return {
         id,
-        name,
-        value
+        name: product.name,
+        value: product.value,
+        created,
+        updated: created
       };
     }
+
+    throw new Error("Product not created");
   }
 
   static async getByID(
     id: string,
-    context?: {
+    context: {
       docClient: DynamoDBDocumentClient;
     }
-  ) {
-    const db = context?.docClient || docClient;
+  ): Promise<Product> {
+    const db = context.docClient;
 
     const params = {
       TableName: PRODUCTS_TABLE,
@@ -61,12 +66,14 @@ export class ProductModel {
     const { Item } = await db.send(command);
 
     if (Item) {
-      const { id, name, value } = Item;
+      const { id, name, value, created, updated } = Item;
 
       return {
         id,
         name,
-        value
+        value,
+        created,
+        updated
       };
     } else {
       throw new Error("Product not found");
