@@ -27,8 +27,8 @@ export class ProductModel {
         id,
         name: product.name,
         value: product.value,
-        created,
-        updated: created
+        created: created.toISOString(),
+        updated: created.toISOString()
       }
     };
 
