@@ -28,22 +28,34 @@ describe("ProductModel", () => {
     // Set the stub to return the mock data
     docClientStub.send.resolves(mockData);
 
-    const result = await ProductModel.create(product.name, product.value, {
-      docClient: docClientStub
-    });
+    const result = await ProductModel.create(
+      {
+        name: product.name,
+        value: product.value
+      },
+      {
+        docClient: docClientStub
+      }
+    );
 
     expect(result).to.deep.include({
       name: product.name,
       value: product.value
     });
+
     expect(result?.id).to.be.a("string");
+
+    expect(result?.created).to.be.a("Date");
+    expect(result?.updated).to.be.a("Date");
   });
 
   it("should fetch a product succesfully based on id", async () => {
     const product = {
       id: "1e88ea38-ffbd-49bc-b25d-a0eca4f7e1b8",
       name: "Product Red",
-      value: 100
+      value: 100,
+      created: new Date(),
+      updated: new Date()
     };
 
     const mockData = {
@@ -51,7 +63,9 @@ describe("ProductModel", () => {
         {
           id: product.id,
           name: product.name,
-          value: product.value
+          value: product.value,
+          created: product.created,
+          updated: product.updated
         }
       ]
     };
