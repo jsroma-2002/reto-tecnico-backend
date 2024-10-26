@@ -1,71 +1,155 @@
-<!--
-title: 'AWS Simple HTTP Endpoint example in NodeJS'
-description: 'This template demonstrates how to make a simple HTTP API with Node.js running on AWS Lambda and API Gateway using the Serverless Framework.'
-layout: Doc
-framework: v4
-platform: AWS
-language: nodeJS
-authorLink: 'https://github.com/serverless'
-authorName: 'Serverless, Inc.'
-authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4'
--->
+# Documentación del API
 
-# Serverless Framework Node HTTP API on AWS
+## Descripción
 
-<https://app.swaggerhub.com/apis-docs/JoseRoncal/NODEJS_BACKEND/1.0.0>
+Este API proporciona endpoints para interactuar con productos almacenados en DynamoDB y datos de planetas de Star Wars. Está construido utilizando el framework Serverless y se ejecuta en AWS Lambda y API Gateway.
 
-This template demonstrates how to make a simple HTTP API with Node.js running on AWS Lambda and API Gateway using the Serverless Framework.
+## Endpoints
 
-This template does not include any kind of persistence (database). For more advanced examples, check out the [serverless/examples repository](https://github.com/serverless/examples/) which includes Typescript, Mongo, DynamoDB and other examples.
+### Productos
 
-## Usage
+### **Crear Producto**
 
-### Deployment
+- **URL:** `/db/products`
 
-In order to deploy the example, you need to run the following command:
+- **Método:** `POST`
 
-```
+- **Descripción:** Crea un nuevo producto en la base de datos
+
+**Cuerpo de la solicitud:**
+
+``` json
+{
+  "name": "Nombre del Producto",
+  "value": 100
+}
+
+ ```
+
+**Respuesta exitosa:**
+
+``` json
+{
+  "id": "id-del-producto",
+  "name": "Nombre del Producto",
+  "value": 100
+}
+
+ ```
+
+#### **Obtener Producto por ID**
+
+- **URL:** `/db/products/:id`
+
+- **Método:** `GET`
+
+- **Descripción:** Obtiene un producto por su ID
+
+**Parámetros de URL:**
+
+- `id`: ID del producto
+
+**Respuesta exitosa:**
+
+``` json
+{
+  "id": "id-del-producto",
+  "name": "Nombre del Producto",
+  "value": 100
+}
+
+ ```
+
+**Respuesta producto No encontrado:**
+
+``` json
+{
+  "message": "Product not found"
+}
+
+ ```
+
+### Planetas
+
+#### **Obtener Planetas**
+
+- **URL:** `/integration/star-wars/planets`
+
+- **Método:** `GET`
+
+- **Descripción:** Obtiene una lista de planetas desde la API de Star Wars.
+
+**Respuesta exitosa:**
+
+``` json
+[
+  {
+    "name": "Tatooine",
+    "climate": "arid",
+    "terrain": "desert",
+    "population": "200000"
+  },
+  {
+    "name": "Alderaan",
+    "climate": "temperate",
+    "terrain": "grasslands, mountains",
+    "population": "2000000000"
+  }
+]
+
+ ```
+
+### Despliegue
+
+Para desplegar el API, ejecuta el siguiente comando:
+
+``` shell
 serverless deploy
-```
 
-After running deploy, you should see output similar to:
+ ```
 
-```
+Después de desplegar, deberías ver una salida similar a:
+
+``` shell
 Deploying "serverless-http-api" to stage "dev" (us-east-1)
-
 ✔ Service deployed to stack serverless-http-api-dev (91s)
-
 endpoint: GET - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/
 functions:
-  hello: serverless-http-api-dev-hello (1.6 kB)
-```
+  handler: serverless-http-api-dev-handler (1.6 kB)
 
-_Note_: In current form, after deployment, your API is public and can be invoked by anyone. For production deployments, you might want to configure an authorizer. For details on how to do that, refer to [HTTP API (API Gateway V2) event docs](https://www.serverless.com/framework/docs/providers/aws/events/http-api).
+ ```
 
-### Invocation
+### Configuración
 
-After successful deployment, you can call the created application via HTTP:
+La configuración del servicio se encuentra en el archivo [serverless.yml]. Aquí puedes ajustar los parámetros del servicio, como el nombre de la tabla de DynamoDB y las políticas de IAM.
 
-```
-curl https://xxxxxxx.execute-api.us-east-1.amazonaws.com/
-```
+### Dependencias
 
-Which should result in response similar to:
+Las dependencias del proyecto están listadas en el archivo [package.json]. Asegúrate de instalar las dependencias necesarias antes de ejecutar o desplegar el proyecto:
 
-```json
-{ "message": "Go Serverless v4! Your function executed successfully!" }
-```
+``` shell
+npm install
+ ```
 
-### Local development
+### Pruebas
 
-The easiest way to develop and test your function is to use the `dev` command:
+Las pruebas unitarias para el modelo de productos se encuentran en la carpeta  ``__tests__``. Puedes ejecutar las pruebas utilizando Mocha:
 
-```
-serverless dev
-```
+``` shell
+npm test
 
-This will start a local emulator of AWS Lambda and tunnel your requests to and from AWS Lambda, allowing you to interact with your function as if it were running in the cloud.
+ ```
 
-Now you can invoke the function as before, but this time the function will be executed locally. Now you can develop your function locally, invoke it, and see the results immediately without having to re-deploy.
+## Documentación
 
-When you are done developing, don't forget to run `serverless deploy` to deploy the function to the cloud.
+## Swagger
+
+Puedes encontrar la documentación asociada al proyecto en la carpeta ``docs``.
+
+Adicionalmente se encuentra expuesta la documentación en SWAGGER/ OpenApi: <https://app.swaggerhub.com/apis-docs/JoseRoncal/NODEJS_BACKEND/1.0.0>
+
+**Importante**: La documentación en Swagger esta expuesta bajo un free trial, es posible que no se encuentre disponible al finalizar este periodo. Se recomienda utilizar el archivo ``open-api-doc.json`` incluido en la documentación para despliegues en local y revisión.
+
+## Postman
+
+Puedes encontrar la documentación asociada al proyecto en la carpeta ``docs`` bajo el nombre ``api-usage-documentation.postman_collection``.

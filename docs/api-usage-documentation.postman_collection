@@ -1,0 +1,292 @@
+{
+	"info": {
+		"_postman_id": "e2e69ed1-3300-4ced-979b-5dff7f3b0440",
+		"name": "RETO TÉCNICO BACKEND NODEJS",
+		"description": "## Documentación del API\n\n### Descripción\n\nEste API proporciona endpoints para interactuar con productos almacenados en DynamoDB y datos de planetas de Star Wars. Está construido utilizando el framework Serverless y se ejecuta en AWS Lambda y API Gateway.\n\n## Endpoints\n\n## Productos\n\n#### **Crear Producto**\n\n- **URL:** `/db/products`\n    \n- **Método:** `POST`\n    \n- **Descripción:** Crea un nuevo producto en la base de datos\n    \n\n**Cuerpo de la solicitud:**\n\n``` json\n{\n  \"name\": \"Nombre del Producto\",\n  \"value\": 100\n}\n\n ```\n\n**Respuesta exitosa:**\n\n``` json\n{\n  \"id\": \"id-del-producto\",\n  \"name\": \"Nombre del Producto\",\n  \"value\": 100\n}\n\n ```\n\n#### **Obtener Producto por ID**\n\n- **URL:** `/db/products/:id`\n    \n- **Método:** `GET`\n    \n- **Descripción:** Obtiene un producto por su ID\n    \n\n**Parámetros de URL:**\n\n- `id`: ID del producto\n    \n\n**Respuesta exitosa:**\n\n``` json\n{\n  \"id\": \"id-del-producto\",\n  \"name\": \"Nombre del Producto\",\n  \"value\": 100\n}\n\n ```\n\n**Respuesta producto No encontrado:**\n\n``` json\n{\n  \"message\": \"Product not found\"\n}\n\n ```\n\n### Planetas\n\n#### **Obtener Planetas**\n\n- **URL:** `/integration/star-wars/planets`\n    \n- **Método:** `GET`\n    \n- **Descripción:** Obtiene una lista de planetas desde la API de Star Wars.\n    \n\n**Respuesta exitosa:**\n\n``` json\n[\n  {\n    \"name\": \"Tatooine\",\n    \"climate\": \"arid\",\n    \"terrain\": \"desert\",\n    \"population\": \"200000\"\n  },\n  {\n    \"name\": \"Alderaan\",\n    \"climate\": \"temperate\",\n    \"terrain\": \"grasslands, mountains\",\n    \"population\": \"2000000000\"\n  }\n]\n\n ```\n\n### Despliegue\n\nPara desplegar el API, ejecuta el siguiente comando:\n\n``` shell\nserverless deploy\n\n ```\n\nDespués de desplegar, deberías ver una salida similar a:\n\n``` shell\nDeploying \"serverless-http-api\" to stage \"dev\" (us-east-1)\n✔ Service deployed to stack serverless-http-api-dev (91s)\nendpoint: GET - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/\nfunctions:\n  handler: serverless-http-api-dev-handler (1.6 kB)\n\n ```\n\n### Configuración\n\nLa configuración del servicio se encuentra en el archivo [serverless.yml](https://null). Aquí puedes ajustar los parámetros del servicio, como el nombre de la tabla de DynamoDB y las políticas de IAM.\n\n### Dependencias\n\nLas dependencias del proyecto están listadas en el archivo [package.json](https://null). Asegúrate de instalar las dependencias necesarias antes de ejecutar o desplegar el proyecto:\n\n``` shell\nnpm install\n\n ```\n\n### Pruebas\n\nLas pruebas unitarias para el modelo de productos se encuentran en la carpeta \"__tests__\" Puedes ejecutar las pruebas utilizando Mocha:\n\n``` shell\nnpm test\n\n ```",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20763254"
+	},
+	"item": [
+		{
+			"name": "db",
+			"item": [
+				{
+					"name": "Get Product By ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/db/products/{{productId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"db",
+								"products",
+								"{{productId}}"
+							]
+						},
+						"description": "Obtener inforamción sobre producto con el identificador asociado"
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://57o9stink7.execute-api.us-east-1.amazonaws.com/db/products/7b28127b-431c-4316-8a1d-8396ceff91d5",
+									"protocol": "https",
+									"host": [
+										"57o9stink7",
+										"execute-api",
+										"us-east-1",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"db",
+										"products",
+										"7b28127b-431c-4316-8a1d-8396ceff91d5"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"7b28127b-431c-4316-8a1d-8396ceff91d5\",\n    \"name\": \"Pera\",\n    \"value\": 77227\n}"
+						},
+						{
+							"name": "Product not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/db/products/fake-id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"db",
+										"products",
+										"fake-id"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Product not found\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Post new Product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{productName}}\",\r\n    \"value\": \"{{productValue}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://57o9stink7.execute-api.us-east-1.amazonaws.com/db/products",
+							"protocol": "https",
+							"host": [
+								"57o9stink7",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"db",
+								"products"
+							]
+						},
+						"description": "Insertar nuevo producto en Dynamo DB"
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://57o9stink7.execute-api.us-east-1.amazonaws.com/db/products",
+									"protocol": "https",
+									"host": [
+										"57o9stink7",
+										"execute-api",
+										"us-east-1",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"db",
+										"products"
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"91ebe4df-f8f0-41ea-b296-48dd110de05e\",\n    \"name\": \"Manzana\",\n    \"value\": \"600\"\n}"
+						}
+					]
+				}
+			],
+			"description": "Endpoints asociados a operaciones en Dynamo DB"
+		},
+		{
+			"name": "integration",
+			"item": [
+				{
+					"name": "Get planets from SWAPI",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/star-wars/planets",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"star-wars",
+								"planets"
+							]
+						},
+						"description": "Obtener información de planetas desde SWAPI. Los campos son traducidos internamente"
+					},
+					"response": [
+						{
+							"name": "Successful Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://57o9stink7.execute-api.us-east-1.amazonaws.com/integration/star-wars/planets",
+									"protocol": "https",
+									"host": [
+										"57o9stink7",
+										"execute-api",
+										"us-east-1",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"integration",
+										"star-wars",
+										"planets"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": {
+										"content": "",
+										"type": "text/plain"
+									}
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"nombre\": \"Tatooine\",\n        \"diametro\": \"10465\",\n        \"periodo_rotacion\": \"23\",\n        \"periodo_orbital\": \"304\",\n        \"gravedad\": \"1 standard\",\n        \"poblacion\": \"200000\",\n        \"clima\": \"arid\",\n        \"terreno\": \"desert\",\n        \"superficie_agua\": \"1\",\n        \"residentes\": [\n            \"https://swapi.dev/api/people/1/\",\n            \"https://swapi.dev/api/people/2/\",\n            \"https://swapi.dev/api/people/4/\",\n            \"https://swapi.dev/api/people/6/\",\n            \"https://swapi.dev/api/people/7/\",\n            \"https://swapi.dev/api/people/8/\",\n            \"https://swapi.dev/api/people/9/\",\n            \"https://swapi.dev/api/people/11/\",\n            \"https://swapi.dev/api/people/43/\",\n            \"https://swapi.dev/api/people/62/\"\n        ],\n        \"peliculas\": [\n            \"https://swapi.dev/api/films/1/\",\n            \"https://swapi.dev/api/films/3/\",\n            \"https://swapi.dev/api/films/4/\",\n            \"https://swapi.dev/api/films/5/\",\n            \"https://swapi.dev/api/films/6/\"\n        ],\n        \"creado\": \"2014-12-09T13:50:49.641000Z\",\n        \"editado\": \"2014-12-20T20:58:18.411000Z\"\n    },\n    {\n        \"nombre\": \"Alderaan\",\n        \"diametro\": \"12500\",\n        \"periodo_rotacion\": \"24\",\n        \"periodo_orbital\": \"364\",\n        \"gravedad\": \"1 standard\",\n        \"poblacion\": \"2000000000\",\n        \"clima\": \"temperate\",\n        \"terreno\": \"grasslands, mountains\",\n        \"superficie_agua\": \"40\",\n        \"residentes\": [\n            \"https://swapi.dev/api/people/5/\",\n            \"https://swapi.dev/api/people/68/\",\n            \"https://swapi.dev/api/people/81/\"\n        ],\n        \"peliculas\": [\n            \"https://swapi.dev/api/films/1/\",\n            \"https://swapi.dev/api/films/6/\"\n        ],\n        \"creado\": \"2014-12-10T11:35:48.479000Z\",\n        \"editado\": \"2014-12-20T20:58:18.420000Z\"\n    },\n    {\n        \"nombre\": \"Yavin IV\",\n        \"diametro\": \"10200\",\n        \"periodo_rotacion\": \"24\",\n        \"periodo_orbital\": \"4818\",\n        \"gravedad\": \"1 standard\",\n        \"poblacion\": \"1000\",\n        \"clima\": \"temperate, tropical\",\n        \"terreno\": \"jungle, rainforests\",\n        \"superficie_agua\": \"8\",\n        \"residentes\": [],\n        \"peliculas\": [\n            \"https://swapi.dev/api/films/1/\"\n        ],\n        \"creado\": \"2014-12-10T11:37:19.144000Z\",\n        \"editado\": \"2014-12-20T20:58:18.421000Z\"\n    },\n    {\n        \"nombre\": \"Hoth\",\n        \"diametro\": \"7200\",\n        \"periodo_rotacion\": \"23\",\n        \"periodo_orbital\": \"549\",\n        \"gravedad\": \"1.1 standard\",\n        \"poblacion\": \"unknown\",\n        \"clima\": \"frozen\",\n        \"terreno\": \"tundra, ice caves, mountain ranges\",\n        \"superficie_agua\": \"100\",\n        \"residentes\": [],\n        \"peliculas\": [\n            \"https://swapi.dev/api/films/2/\"\n        ],\n        \"creado\": \"2014-12-10T11:39:13.934000Z\",\n        \"editado\": \"2014-12-20T20:58:18.423000Z\"\n    },\n    {\n        \"nombre\": \"Dagobah\",\n        \"diametro\": \"8900\",\n        \"periodo_rotacion\": \"23\",\n        \"periodo_orbital\": \"341\",\n        \"gravedad\": \"N/A\",\n        \"poblacion\": \"unknown\",\n        \"clima\": \"murky\",\n        \"terreno\": \"swamp, jungles\",\n        \"superficie_agua\": \"8\",\n        \"residentes\": [],\n        \"peliculas\": [\n            \"https://swapi.dev/api/films/2/\",\n            \"https://swapi.dev/api/films/3/\",\n            \"https://swapi.dev/api/films/6/\"\n        ],\n        \"creado\": \"2014-12-10T11:42:22.590000Z\",\n        \"editado\": \"2014-12-20T20:58:18.425000Z\"\n    },\n    {\n        \"nombre\": \"Bespin\",\n        \"diametro\": \"118000\",\n        \"periodo_rotacion\": \"12\",\n        \"periodo_orbital\": \"5110\",\n        \"gravedad\": \"1.5 (surface), 1 standard (Cloud City)\",\n        \"poblacion\": \"6000000\",\n        \"clima\": \"temperate\",\n        \"terreno\": \"gas giant\",\n        \"superficie_agua\": \"0\",\n        \"residentes\": [\n            \"https://swapi.dev/api/people/26/\"\n        ],\n        \"peliculas\": [\n            \"https://swapi.dev/api/films/2/\"\n        ],\n        \"creado\": \"2014-12-10T11:43:55.240000Z\",\n        \"editado\": \"2014-12-20T20:58:18.427000Z\"\n    },\n    {\n        \"nombre\": \"Endor\",\n        \"diametro\": \"4900\",\n        \"periodo_rotacion\": \"18\",\n        \"periodo_orbital\": \"402\",\n        \"gravedad\": \"0.85 standard\",\n        \"poblacion\": \"30000000\",\n        \"clima\": \"temperate\",\n        \"terreno\": \"forests, mountains, lakes\",\n        \"superficie_agua\": \"8\",\n        \"residentes\": [\n            \"https://swapi.dev/api/people/30/\"\n        ],\n        \"peliculas\": [\n            \"https://swapi.dev/api/films/3/\"\n        ],\n        \"creado\": \"2014-12-10T11:50:29.349000Z\",\n        \"editado\": \"2014-12-20T20:58:18.429000Z\"\n    },\n    {\n        \"nombre\": \"Naboo\",\n        \"diametro\": \"12120\",\n        \"periodo_rotacion\": \"26\",\n        \"periodo_orbital\": \"312\",\n        \"gravedad\": \"1 standard\",\n        \"poblacion\": \"4500000000\",\n        \"clima\": \"temperate\",\n        \"terreno\": \"grassy hills, swamps, forests, mountains\",\n        \"superficie_agua\": \"12\",\n        \"residentes\": [\n            \"https://swapi.dev/api/people/3/\",\n            \"https://swapi.dev/api/people/21/\",\n            \"https://swapi.dev/api/people/35/\",\n            \"https://swapi.dev/api/people/36/\",\n            \"https://swapi.dev/api/people/37/\",\n            \"https://swapi.dev/api/people/38/\",\n            \"https://swapi.dev/api/people/39/\",\n            \"https://swapi.dev/api/people/42/\",\n            \"https://swapi.dev/api/people/60/\",\n            \"https://swapi.dev/api/people/61/\",\n            \"https://swapi.dev/api/people/66/\"\n        ],\n        \"peliculas\": [\n            \"https://swapi.dev/api/films/3/\",\n            \"https://swapi.dev/api/films/4/\",\n            \"https://swapi.dev/api/films/5/\",\n            \"https://swapi.dev/api/films/6/\"\n        ],\n        \"creado\": \"2014-12-10T11:52:31.066000Z\",\n        \"editado\": \"2014-12-20T20:58:18.430000Z\"\n    },\n    {\n        \"nombre\": \"Coruscant\",\n        \"diametro\": \"12240\",\n        \"periodo_rotacion\": \"24\",\n        \"periodo_orbital\": \"368\",\n        \"gravedad\": \"1 standard\",\n        \"poblacion\": \"1000000000000\",\n        \"clima\": \"temperate\",\n        \"terreno\": \"cityscape, mountains\",\n        \"superficie_agua\": \"unknown\",\n        \"residentes\": [\n            \"https://swapi.dev/api/people/34/\",\n            \"https://swapi.dev/api/people/55/\",\n            \"https://swapi.dev/api/people/74/\"\n        ],\n        \"peliculas\": [\n            \"https://swapi.dev/api/films/3/\",\n            \"https://swapi.dev/api/films/4/\",\n            \"https://swapi.dev/api/films/5/\",\n            \"https://swapi.dev/api/films/6/\"\n        ],\n        \"creado\": \"2014-12-10T11:54:13.921000Z\",\n        \"editado\": \"2014-12-20T20:58:18.432000Z\"\n    },\n    {\n        \"nombre\": \"Kamino\",\n        \"diametro\": \"19720\",\n        \"periodo_rotacion\": \"27\",\n        \"periodo_orbital\": \"463\",\n        \"gravedad\": \"1 standard\",\n        \"poblacion\": \"1000000000\",\n        \"clima\": \"temperate\",\n        \"terreno\": \"ocean\",\n        \"superficie_agua\": \"100\",\n        \"residentes\": [\n            \"https://swapi.dev/api/people/22/\",\n            \"https://swapi.dev/api/people/72/\",\n            \"https://swapi.dev/api/people/73/\"\n        ],\n        \"peliculas\": [\n            \"https://swapi.dev/api/films/5/\"\n        ],\n        \"creado\": \"2014-12-10T12:45:06.577000Z\",\n        \"editado\": \"2014-12-20T20:58:18.434000Z\"\n    }\n]"
+						}
+					]
+				}
+			],
+			"description": "Endpoint asociados a la integración con SWAPI"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://57o9stink7.execute-api.us-east-1.amazonaws.com"
+		}
+	]
+}
