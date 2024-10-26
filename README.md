@@ -99,13 +99,23 @@ Este API proporciona endpoints para interactuar con productos almacenados en Dyn
 
  ```
 
+## Entorno y despliegue
+
+### Variables de entorno
+
+Para configurar las variables de entorno se debe agregar un archivo ``.env`` siguiendo el esquema del archivo ``.env.example``
+
+``` env
+ORG=your-orgnization
+app=name-of-your-app-in-serverless-platform
+```
+
 ### Despliegue
 
-Para desplegar el API, ejecuta el siguiente comando:
+Para desplegar el API, ejecuta el siguiente comando :
 
 ``` shell
 serverless deploy
-
  ```
 
 Después de desplegar, deberías ver una salida similar a:
@@ -116,10 +126,9 @@ Deploying "serverless-http-api" to stage "dev" (us-east-1)
 endpoint: GET - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/
 functions:
   handler: serverless-http-api-dev-handler (1.6 kB)
-
  ```
 
-### Configuración
+## Configuración
 
 La configuración del servicio se encuentra en el archivo [serverless.yml]. Aquí puedes ajustar los parámetros del servicio, como el nombre de la tabla de DynamoDB y las políticas de IAM.
 
@@ -142,7 +151,7 @@ npm test
 
 ## Documentación
 
-## Swagger
+### Swagger
 
 Puedes encontrar la documentación asociada al proyecto en la carpeta ``docs``.
 
@@ -150,6 +159,6 @@ Adicionalmente se encuentra expuesta la documentación en SWAGGER/ OpenApi: <htt
 
 **Importante**: La documentación en Swagger esta expuesta bajo un free trial, es posible que no se encuentre disponible al finalizar este periodo. Se recomienda utilizar el archivo ``open-api-doc.json`` incluido en la documentación para despliegues en local y revisión.
 
-## Postman
+### Postman
 
 Puedes encontrar la documentación asociada al proyecto en la carpeta ``docs`` bajo el nombre ``api-usage-documentation.postman_collection``.
